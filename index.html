@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Special Relativity Simulator</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div class="widget-card">
+        <!-- Top Visual Stage -->
+        <div class="stage">
+            <button class="pause-btn" id="pause-btn" title="Pause / Resume" aria-label="Pause or Resume">
+                <svg id="pause-icon" width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+                    <rect x="2" y="1.5" width="3" height="9" rx="0.8" />
+                    <rect x="7" y="1.5" width="3" height="9" rx="0.8" />
+                </svg>
+            </button>
+
+            <!-- Left: Rest Frame -->
+            <div class="frame-col">
+                <div class="frame-title">Rest frame</div>
+                <div class="stopwatch-wrap">
+                    <svg viewBox="0 0 280 205">
+                        <rect x="131" y="10" width="18" height="14" rx="2" fill="none" stroke="#8e95a2"
+                            stroke-width="1.8" />
+                        <g transform="translate(184, 32) rotate(36)">
+                            <rect x="-6" y="-5" width="12" height="9" rx="1.5" fill="none" stroke="#8e95a2"
+                                stroke-width="1.8" />
+                        </g>
+                        <circle cx="140" cy="112" r="84" fill="#2c303a" stroke="#8e95a2" stroke-width="2" />
+                        <circle cx="140" cy="112" r="78" fill="#262932" stroke="#454a57" stroke-width="1" />
+                        <g id="ticks-rest"></g>
+                        <text x="140" y="54" text-anchor="middle" fill="#cbd5e1" font-size="12"
+                            font-weight="500">60</text>
+                        <text x="196" y="116" text-anchor="middle" fill="#cbd5e1" font-size="12"
+                            font-weight="500">15</text>
+                        <text x="140" y="176" text-anchor="middle" fill="#cbd5e1" font-size="12"
+                            font-weight="500">30</text>
+                        <text x="84" y="116" text-anchor="middle" fill="#cbd5e1" font-size="12"
+                            font-weight="500">45</text>
+                        <line id="hand-rest" x1="140" y1="124" x2="140" y2="54" stroke="#8ab4f8" stroke-width="3"
+                            stroke-linecap="round" />
+                        <circle cx="140" cy="112" r="4.5" fill="#8ab4f8" />
+                    </svg>
+                </div>
+
+                <div class="length-block">
+                    <div class="length-caption caption-blue">L₀ (100%)</div>
+                    <div class="rod-container">
+                        <div class="rod-rest"></div>
+                    </div>
+                    <svg class="light-clock-mini" viewBox="0 0 130 36">
+                        <line x1="65" y1="4" x2="65" y2="30" stroke="#4b5262" stroke-width="1.4"
+                            stroke-dasharray="3 3" />
+                        <line x1="51" y1="31" x2="79" y2="31" stroke="#8e95a2" stroke-width="2"
+                            stroke-linecap="round" />
+                        <circle id="photon-rest" cx="65" cy="12" r="4" fill="#8ab4f8" />
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Right: Moving Frame -->
+            <div class="frame-col">
+                <div class="frame-title" id="moving-title">Moving (0.80 c)</div>
+                <div class="stopwatch-wrap">
+                    <svg viewBox="0 0 280 205">
+                        <g id="speed-lines" stroke="#e8652b" stroke-width="1.8" stroke-linecap="round">
+                            <line x1="10" y1="62" x2="54" y2="62" />
+                            <line x1="2" y1="87" x2="46" y2="87" />
+                            <line x1="0" y1="112" x2="42" y2="112" />
+                            <line x1="4" y1="137" x2="46" y2="137" />
+                            <line x1="14" y1="162" x2="54" y2="162" />
+                        </g>
+                        <g id="motion-arrow" stroke="#e8652b" fill="#e8652b">
+                            <line x1="232" y1="112" x2="268" y2="112" stroke-width="2.4" stroke-linecap="round" />
+                            <polygon points="276,112 266,107 266,117" />
+                        </g>
+                        <rect x="131" y="10" width="18" height="14" rx="2" fill="none" stroke="#8e95a2"
+                            stroke-width="1.8" />
+                        <g transform="translate(184, 32) rotate(36)">
+                            <rect x="-6" y="-5" width="12" height="9" rx="1.5" fill="none" stroke="#8e95a2"
+                                stroke-width="1.8" />
+                        </g>
+                        <circle cx="140" cy="112" r="84" fill="#2c303a" stroke="#8e95a2" stroke-width="2" />
+                        <circle cx="140" cy="112" r="78" fill="#262932" stroke="#454a57" stroke-width="1" />
+                        <g id="ticks-mov"></g>
+                        <text x="140" y="54" text-anchor="middle" fill="#cbd5e1" font-size="12"
+                            font-weight="500">60</text>
+                        <text x="196" y="116" text-anchor="middle" fill="#cbd5e1" font-size="12"
+                            font-weight="500">15</text>
+                        <text x="140" y="176" text-anchor="middle" fill="#cbd5e1" font-size="12"
+                            font-weight="500">30</text>
+                        <text x="84" y="116" text-anchor="middle" fill="#cbd5e1" font-size="12"
+                            font-weight="500">45</text>
+                        <line id="hand-mov" x1="140" y1="124" x2="140" y2="54" stroke="#e8652b" stroke-width="3"
+                            stroke-linecap="round" />
+                        <circle cx="140" cy="112" r="4.5" fill="#e8652b" />
+                    </svg>
+                </div>
+
+                <div class="length-block">
+                    <div class="length-caption caption-orange" id="moving-len-caption">L = L₀/γ (60%)</div>
+                    <div class="rod-container">
+                        <div class="rod-ghost"></div>
+                        <div class="rod-contracted" id="rod-contracted" style="width: 60%;"></div>
+                    </div>
+                    <svg class="light-clock-mini" viewBox="0 0 130 36">
+                        <polyline id="diag-path" points="32,31 65,4 98,31" fill="none" stroke="#9a4b29"
+                            stroke-width="1.4" stroke-dasharray="3 3" />
+                        <line x1="51" y1="31" x2="79" y2="31" stroke="#8e95a2" stroke-width="2"
+                            stroke-linecap="round" />
+                        <circle id="photon-mov" cx="65" cy="8" r="4" fill="#e8652b" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metrics Readout Grid -->
+        <div class="metrics-grid">
+            <div class="metric-item">
+                <div class="metric-label">Lorentz factor (γ)</div>
+                <div class="metric-value" id="out-gamma">1.667</div>
+            </div>
+            <div class="metric-item">
+                <div class="metric-label">Dilated time (Δt)</div>
+                <div class="metric-value" id="out-time">10.00 s</div>
+            </div>
+            <div class="metric-item">
+                <div class="metric-label">Contracted length (L)</div>
+                <div class="metric-value" id="out-length">60.00 m</div>
+            </div>
+            <div class="metric-item">
+                <div class="metric-label">Momentum (p)</div>
+                <div class="metric-value" id="out-momentum">4.00×10^8 kg·m/s</div>
+            </div>
+            <div class="metric-item">
+                <div class="metric-label">Kinetic energy (K)</div>
+                <div class="metric-value" id="out-ke">59.92 PJ</div>
+            </div>
+            <div class="metric-item">
+                <div class="metric-label">Total energy (E)</div>
+                <div class="metric-value" id="out-te">149.79 PJ</div>
+            </div>
+        </div>
+
+        <!-- Bottom Controls -->
+        <div class="controls-area">
+            <div class="slider-label">Relative speed (v/c)</div>
+            <div class="slider-row">
+                <input type="range" id="beta" min="0" max="0.999" step="0.001" value="0.800" />
+                <div class="speed-val" id="beta-readout">0.800 c</div>
+            </div>
+
+            <div class="steppers-row">
+                <div class="stepper-group">
+                    <label for="t0">Proper time Δt₀ (s)</label>
+                    <div class="stepper-box">
+                        <button type="button" class="step-btn" data-target="t0" data-step="-1">−</button>
+                        <input type="number" id="t0" value="6" min="0" step="any" />
+                        <button type="button" class="step-btn" data-target="t0" data-step="1">+</button>
+                    </div>
+                </div>
+
+                <div class="stepper-group">
+                    <label for="l0">Rest length L₀ (m)</label>
+                    <div class="stepper-box">
+                        <button type="button" class="step-btn" data-target="l0" data-step="-10">−</button>
+                        <input type="number" id="l0" value="100" min="0" step="any" />
+                        <button type="button" class="step-btn" data-target="l0" data-step="10">+</button>
+                    </div>
+                </div>
+
+                <div class="stepper-group">
+                    <label for="m0">Rest mass m₀ (kg)</label>
+                    <div class="stepper-box">
+                        <button type="button" class="step-btn" data-target="m0" data-step="-1">−</button>
+                        <input type="number" id="m0" value="1" min="0" step="any" />
+                        <button type="button" class="step-btn" data-target="m0" data-step="1">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

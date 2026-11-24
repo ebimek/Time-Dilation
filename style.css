@@ -1,0 +1,338 @@
+:root {
+    --page-bg: #131417;
+    --stage-bg: #252830;
+    --panel-bg: #1e2026;
+    --input-bg: #2a2d36;
+    --border: #343842;
+    --text-main: #f1f3f5;
+    --text-muted: #b0b5c0;
+    --blue: #8ab4f8;
+    --blue-fill: rgba(138, 180, 248, 0.16);
+    --orange: #e8652b;
+    --orange-fill: rgba(232, 101, 43, 0.22);
+}
+
+* {
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 24px 16px;
+    background: var(--page-bg);
+    color: var(--text-main);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+.widget-card {
+    width: 100%;
+    max-width: 780px;
+    background: var(--panel-bg);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+}
+
+.stage {
+    position: relative;
+    background: var(--stage-bg);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--border);
+    padding: 22px 16px 20px;
+}
+
+.stage::after {
+    content: "";
+    position: absolute;
+    top: 16px;
+    bottom: 16px;
+    left: 50%;
+    border-left: 1px dashed #3d424f;
+    pointer-events: none;
+}
+
+.pause-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: none;
+    background: #363a45;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 5;
+    transition: background 0.15s;
+}
+
+.pause-btn:hover {
+    background: #454a57;
+}
+
+.frame-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 12px;
+}
+
+.frame-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 12px;
+}
+
+.stopwatch-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stopwatch-wrap svg {
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+    overflow: visible;
+}
+
+.length-block {
+    width: 100%;
+    max-width: 195px;
+    margin-top: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.length-caption {
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.caption-blue {
+    color: var(--blue);
+}
+
+.caption-orange {
+    color: var(--orange);
+}
+
+.rod-container {
+    position: relative;
+    width: 100%;
+    height: 11px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rod-ghost {
+    position: absolute;
+    inset: 0;
+    border: 1px dashed #555b69;
+    border-radius: 3px;
+}
+
+.rod-rest {
+    width: 100%;
+    height: 100%;
+    border: 1.5px solid var(--blue);
+    background: var(--blue-fill);
+    border-radius: 3px;
+}
+
+.rod-contracted {
+    height: 100%;
+    border: 1.5px solid var(--orange);
+    background: var(--orange-fill);
+    border-radius: 3px;
+    transition: width 0.06s linear;
+}
+
+.light-clock-mini {
+    margin-top: 4px;
+    width: 130px;
+    height: 36px;
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px 12px;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+}
+
+.metric-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.metric-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.metric-value {
+    font-size: 1.08rem;
+    font-weight: 700;
+    color: var(--text-main);
+    font-variant-numeric: tabular-nums;
+}
+
+.controls-area {
+    padding: 20px 26px 24px;
+}
+
+.slider-label {
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+}
+
+.slider-row {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 22px;
+}
+
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    flex: 1;
+    height: 5px;
+    border-radius: 999px;
+    background: linear-gradient(to right, #8ab4f8 0%, #8ab4f8 80%, #3a3f4b 80%, #3a3f4b 100%);
+    outline: none;
+    cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #b6d2ff;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border: none;
+    border-radius: 50%;
+    background: #b6d2ff;
+    cursor: pointer;
+}
+
+.speed-val {
+    min-width: 68px;
+    text-align: right;
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: var(--text-main);
+    font-variant-numeric: tabular-nums;
+}
+
+.steppers-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.stepper-group label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.stepper-box {
+    display: flex;
+    align-items: center;
+    background: var(--input-bg);
+    border-radius: 8px;
+    height: 40px;
+    padding: 0 6px;
+}
+
+.step-btn {
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 1.15rem;
+    cursor: pointer;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+
+.step-btn:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-main);
+}
+
+.stepper-box input {
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+    background: transparent;
+    border: none;
+    color: var(--text-main);
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-align: right;
+    padding-right: 6px;
+    outline: none;
+    -moz-appearance: textfield;
+}
+
+.stepper-box input::-webkit-outer-spin-button,
+.stepper-box input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+@media (max-width: 640px) {
+    .stage {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .stage::after {
+        display: none;
+    }
+
+    .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .steppers-row {
+        grid-template-columns: 1fr;
+    }
+}
